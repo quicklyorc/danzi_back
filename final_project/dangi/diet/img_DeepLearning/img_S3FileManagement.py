@@ -6,24 +6,34 @@ from botocore.client import Config
 class S3ImgUploader:
     def __init__(self, file):
         self.file = file
-
-    def upload(self):
-        s3_client = boto3.client(
+        self.s3_client = boto3.client(
             's3',
             aws_access_key_id     = settings.AWS_ACCESS_KEY_ID,
             aws_secret_access_key = settings.AWS_SECRET_ACCESS_KEY
         )
+
+    def upload(self):
+    
         url = 'foodimg'+'/'+uuid.uuid1().hex
         
-        s3_client.upload_fileobj(
+        self.s3_client.upload_fileobj(
             self.file, 
-            settings.AWS_STORAGE_BUCKET_NAME, 
-            url, 
+            settings.AWS_STORAGE_BUCKET_NAME,
+            url,
             ExtraArgs={
                 "ContentType": self.file.content_type
             }
         )
         return url
+    
+    def delete(self, img_key):
+        # S3 객체 삭제
+        bucket_name = settings.AWS_STORAGE_BUCKET_NAME
+        
+        self.s3_client.delete_object(Bucket=bucket_name, Key=img_key)
+
+        print(f'{img_key} deleted')
+        
     
   
     
@@ -61,6 +71,6 @@ class S3ImgurlMapper:
         bucket_name = settings.AWS_STORAGE_BUCKET_NAME
         region_name = 'ap-northeast-2'
         image_key = self.url  # S3에서 이미지의 키 (파일 경로)
-        mapped_url = f"https://{bucket_name}.s3.{region_name}.amazonaws.com/{image_key}"
+        mapped_url = f'https://{bucket_name}.s3.{region_name}.amazonaws.com/{image_key}'
         # 클라이언트에게 이미지 URL 전송
         return mapped_url

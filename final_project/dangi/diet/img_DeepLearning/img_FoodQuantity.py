@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-from tensorflow.keras.models import load_model
+from .img_ModelPreloader import quantity_model
 
 class FoodQuantityPredictor:
     def __init__(self, dict):
@@ -9,7 +9,7 @@ class FoodQuantityPredictor:
 
     def quantitypredict(self):
 
-        bestmodel = load_model("diet/models/model_0.86_0.40_saved.h5")
+        bestmodel = quantity_model
 
         coin_image = self.images_dict["coin"]
 

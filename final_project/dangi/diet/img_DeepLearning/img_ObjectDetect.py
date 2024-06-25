@@ -1,19 +1,18 @@
 import cv2
 import numpy as np
+from .img_ModelPreloader import object_yolonet, name_file
 
 class ObjectDetector:
     def __init__(self, image):
 
         self.image = np.array(image)
 
-        # Yolov3 모델 및 설정 파일 로드
-        self.net = cv2.dnn.readNet('diet/models/yolo/yolov3_testing.cfg', 'diet/models/yolo/yolov3_training_final.weights')
-        self.net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV) # OpenCV의 기본 백엔드를 사용하도록 설정
-        self.net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)  # CPU 설정 # or DNN_TARGET_OPENCL, DNN_TARGET_CUDA
-
+        # Yolov3 모델 로드
+        self.net = object_yolonet
+        
         # 클래스 파일 로드
         self.classes = None
-        classesFile = 'diet/models/yolo/obj.names'
+        classesFile = name_file
         with open(classesFile, 'rt') as f:
             self.classes = f.read().rstrip('\n').split('\n')
 

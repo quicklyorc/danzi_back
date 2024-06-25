@@ -1,11 +1,8 @@
 import tensorflow as tf
 import cv2
-from tensorflow.keras.optimizers import SGD, Adam, RMSprop, Adagrad
-from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
-from tensorflow.keras import layers, models
 import numpy as np
-from tensorflow.keras.preprocessing.image import img_to_array, load_img
-from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.image import img_to_array
+from .img_ModelPreloader import classify_model
 
 class FoodClassifier:
     def __init__(self, dict):
@@ -15,7 +12,7 @@ class FoodClassifier:
     def menupredict(self):
 
         # 이미지 전처리
-        img = self.images_dict["dish"]
+        img = self.images_dict['dish']
         img = img_to_array(img)
         img = tf.keras.applications.mobilenet_v3.preprocess_input(img)
 
@@ -24,7 +21,7 @@ class FoodClassifier:
         input_img = cv2.resize(img, img_size)
         input_img = np.expand_dims(input_img, axis=0)
 
-        bestmodel = load_model("diet/models/SGD_checkpoint_10.h5")
+        bestmodel = classify_model
 
         # 모델 예측
         y_pred_prob = bestmodel.predict(input_img)
