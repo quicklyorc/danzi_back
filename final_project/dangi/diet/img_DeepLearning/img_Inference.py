@@ -22,6 +22,10 @@ class DLInference:
         layerOutputs = objectdetector.detect_objects()
         output_dict = objectdetector.crop_image(layerOutputs)
 
+        if output_dict in (3,2):
+            return output_dict, output_dict, output_dict, output_dict, output_dict, output_dict
+        
+
         # 음식 분류
         foodclassifier = FoodClassifier(dict=output_dict)
         foodmenu = foodclassifier.menupredict()
