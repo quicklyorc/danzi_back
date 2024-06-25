@@ -26,11 +26,13 @@ class FoodQuantityPredictor:
 
         # 이미지 전처리
         input_img = cv2.resize(dish_image, img_size)
-        input_img = np.expand_dims(input_img, axis=0)
+        nomalized = input_img/255
+        input_img32 = nomalized.astype(np.float32)
+        input_img32 = np.expand_dims(input_img32, axis=0)
 
 
         # 모델 예측
-        y_pred_prob = bestmodel.predict([input_img, np_ratio])
+        y_pred_prob = bestmodel.predict([input_img32, np_ratio])
 
         # 예측결과를 quantity로 변환
         y_pred = np.argmax(y_pred_prob[0])
