@@ -153,12 +153,13 @@ class ImageInfo(APIView):
         # 이미지 추론
         inference = img_Inference.DLInference(bytes_img=bytes_img)
         foodmenu, quantity, kcal, carbo, protein, prov = inference.predict()
+        
         if foodmenu==3:
             uploader.delete(img_key=imgurl)
-            return JsonResponse({'error': '음식이 탐지되지 않았습니다.'}, status=status.HTTP_204_NO_CONTENT)
+            return JsonResponse({'error': '음식이 탐지되지 않았습니다.'}, status=status.HTTP_400_BAD_REQUEST)
         if foodmenu==2:
             uploader.delete(img_key=imgurl)
-            return JsonResponse({'error': '동전이 탐지되지 않았습니다.'}, status=status.HTTP_204_NO_CONTENT)
+            return JsonResponse({'error': '동전이 탐지되지 않았습니다.'}, status=status.HTTP_400_BAD_REQUEST)
         
         return JsonResponse(
                 {

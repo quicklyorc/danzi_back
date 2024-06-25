@@ -22,6 +22,7 @@ class DLInference:
         layerOutputs = objectdetector.detect_objects()
         output_dict = objectdetector.crop_image(layerOutputs)
 
+        # 그릇이나 동전이 탐지되지 않은 경우
         if output_dict in (3,2):
             return output_dict, output_dict, output_dict, output_dict, output_dict, output_dict
         

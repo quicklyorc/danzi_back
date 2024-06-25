@@ -51,10 +51,13 @@ class ObjectDetector:
 
         # NMSBoxes : 박스가 겹치면 신뢰도가 가장 높은 상자 하나만 선택
         indices = cv2.dnn.NMSBoxes(boxes, confidences, confidence_threshold, nms_threshold)
-        
+
+        # 그릇(3)이 탐지되지 않으면
+        print(class_ids)
         if not 3 in class_ids:
             return 3
         
+        # 동전(2)이 탐지되지 않으면
         if not 2 in class_ids:
             return 2
 
@@ -62,7 +65,6 @@ class ObjectDetector:
         for i in indices:
             box = boxes[i]
             left, top, width, height = box
-            print(class_ids)
             class_id = class_ids[i]
             # 동전:2 그릇:3
             if class_id in (2,3):

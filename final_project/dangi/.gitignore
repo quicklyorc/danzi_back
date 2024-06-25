@@ -1,2 +1,3 @@
 /config/my_settings.py
-/diet/models
+/diet/models/yolo/
+/diet/models/keras/
