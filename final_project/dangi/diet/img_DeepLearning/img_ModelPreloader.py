@@ -34,24 +34,38 @@ classify_local = 'diet/models/keras/model_0.86_0.40_saved.h5'
 
 
 if not os.path.exists(weights_file):
+    print("Yolo Model is Not Found!\nDownloading Yolo Model...")
     os.makedirs('diet/models/yolo', exist_ok=True)
     # 파일 다운로드
     s3_client.download_file(bucket_name, s3_weights_file, weights_file)
+    print("weights_file download complete!")
     s3_client.download_file(bucket_name, s3_cfg_file, cfg_file)
+    print("cfg_file download complete!")
     s3_client.download_file(bucket_name, s3_name_file, name_file)
+    print("name_file download complete!")
 
 if not os.path.exists(quantity_local):
+    print("Quantity Model is Not Found!\nDownloading Quantity Model...")
     os.makedirs('diet/models/keras', exist_ok=True)
     s3_client.download_file(bucket_name, s3_quantity_file, quantity_local)
+    print("Quantity Model download complete!")
     
 if not os.path.exists(classify_local):
+    print("Classify Model is Not Found!\nDownloading Classify Model...")
     os.makedirs('diet/models/keras', exist_ok=True)
     s3_client.download_file(bucket_name, s3_classify_file, classify_local)
-    
+    print("Classify Model download complete!")
+
+print("Loading Yolo Model...")
 object_yolonet = cv2.dnn.readNet(cfg_file, weights_file)
 object_yolonet.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV) # OpenCV의 기본 백엔드를 사용하도록 설정
 object_yolonet.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)  # CPU 설정 # or DNN_TARGET_OPENCL, DNN_TARGET_CUDA
+print("Yolo Model load Complete!")
 
-
+print("Loading Quantity Model...")
 quantity_model = load_model(quantity_local)
+print("Quantity Model load Complete!")
+
+print("Loading Classify Model...")
 classify_model = load_model(classify_local)
+print("Classify Model load Complete!")

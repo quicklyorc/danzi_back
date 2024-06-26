@@ -23,15 +23,22 @@ class DietConfig(AppConfig):
 
             # 이미지 파일을 이진 모드로 열기
             image_binary = cv2.imread(image_file_path)
-                
+            
+            
+            print("Warmup Yolo Model...")
             objectdetector = img_ObjectDetect.ObjectDetector(image=image_binary)
             layerOutputs = objectdetector.detect_objects()
             output_dict = objectdetector.crop_image(layerOutputs)
+            print("Yolo Model warmup Complete!")
 
             # 음식 분류
+            print("Warmup Classify Model...")
             foodclassifier = img_FoodClassify.FoodClassifier(dict=output_dict)
             foodmenu = foodclassifier.menupredict()
+            print("Classify Model warmup Complete!")
 
             # 음식량 추정
+            print("Warmup Quantity Model...")
             quantitypredictor = img_FoodQuantity.FoodQuantityPredictor(dict=output_dict)
             quantity_level = quantitypredictor.quantitypredict()
+            print("Quantity Model warmup Complete!")
