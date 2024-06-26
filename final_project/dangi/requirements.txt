@@ -56,7 +56,6 @@ pyasn1_modules==0.4.0
 PyJWT==1.7.1
 PyMySQL==1.1.1
 python-dateutil==2.9.0.post0
-pywin32==306
 pyzmq==25.1.0
 requests==2.32.3
 requests-oauthlib==2.0.0
@@ -69,7 +68,6 @@ tensorboard==2.15.2
 tensorboard-data-server==0.7.2
 tensorflow==2.15.0
 tensorflow-estimator==2.15.0
-tensorflow-intel==2.15.0
 tensorflow-io-gcs-filesystem==0.31.0
 termcolor==2.4.0
 traitlets==5.9.0
