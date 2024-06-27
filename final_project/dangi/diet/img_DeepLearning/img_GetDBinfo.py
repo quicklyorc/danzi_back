@@ -12,11 +12,11 @@ class FoodInfoChecker:
         serializer = FoodInfoSerializer(model)
 
         # 각 feature들 가져오기 + quantity level에 곱해서
-        quantity = serializer.data['quantity'] * self.quantity_level
-        kcal = serializer.data['kcal'] * self.quantity_level
-        carbo = serializer.data['carbo'] * self.quantity_level
-        protein = serializer.data['protein'] * self.quantity_level
-        prov = serializer.data['prov'] * self.quantity_level
+        quantity = int(serializer.data['quantity'] * self.quantity_level)
+        kcal = int(serializer.data['kcal'] * self.quantity_level)
+        carbo = int(serializer.data['carbo'] * self.quantity_level)
+        protein = int(serializer.data['protein'] * self.quantity_level)
+        prov = int(serializer.data['prov'] * self.quantity_level)
 
         # # db연동 전 임시 값들.
         # quantity = 375
